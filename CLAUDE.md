@@ -12,7 +12,7 @@ plaintext access. The repo is in **Phase 0 (design freeze)**: docs and skeleton 
 
 ## Source-of-truth order
 
-1. `docs/prd/PRD-v1.1.1.md`: requirements (converted from the `.docx` in the same folder). Cite IDs such as `FR-4.3`, `NFR-SEC-01` and `AC-15`.
+1. `docs/prd/PRD-v1.1.1.md`: requirements (converted from the original PRD v1.1.1 .docx, which is kept outside the repo for now). Cite IDs such as `FR-4.3`, `NFR-SEC-01` and `AC-15`.
 2. `docs/security/INVARIANTS.md`: normative MUST / MUST NOT rules. **These override convenience, deadlines and other docs.**
 3. `docs/adr/`: accepted ADRs override the PRD "default position". *Proposed* ADRs are not binding yet.
 4. `docs/ARCHITECTURE.md`, `docs/architecture/*`: derived design. Update them when an ADR changes.

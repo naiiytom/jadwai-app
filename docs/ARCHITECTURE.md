@@ -265,7 +265,7 @@ with optimistic locking on `status`). Model-based tests come from the transition
 | Product analytics | analytics store | Opaque, allow-listed events only |
 | Security events | WORM/append-only store | `vault_id` + hashed actor refs |
 
-Logical schema: [architecture/DATA-MODEL.md](architecture/DATA-MODEL.md).
+Logical schema: [architecture/DATA-MODEL.md](architecture/DATA-MODEL.md). The lead and partner domains (lead lifecycle, partner types, authorization matrix) are covered in [architecture/LEADS-AND-PARTNERS.md](architecture/LEADS-AND-PARTNERS.md).
 
 ## 11. Client-side engines
 

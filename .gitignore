@@ -22,3 +22,5 @@ dist/
 # Never commit real recovery material or exports
 *.recovery-kit.*
 *.vault-export.*
+# PRD source documents are kept outside the repo for now
+docs/prd/*.docx

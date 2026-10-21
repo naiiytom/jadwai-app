@@ -42,12 +42,12 @@ The full normative list is in [docs/security/INVARIANTS.md](docs/security/INVARI
 .
 ├── CLAUDE.md                 # Guidance for AI coding agents (read first)
 ├── docs/
-│   ├── prd/                  # PRD v1.1.1 (.docx original + Markdown conversion)
+│   ├── prd/                  # PRD v1.1.1 (Markdown conversion)
 │   ├── CONTEXT.md            # Domain, personas, glossary, Thai legal context
 │   ├── ARCHITECTURE.md       # System architecture & zero-knowledge model
 │   ├── ROADMAP.md            # Phase 0–3 plan with exit criteria
 │   ├── TRACEABILITY.md       # FR / NFR / AC → component → phase
-│   ├── architecture/         # Data model, state machines, review notes
+│   ├── architecture/         # Data model, state machines, leads & partners, review notes
 │   ├── security/             # Invariants & threat model
 │   └── adr/                  # Architecture Decision Records (ADR-001…017)
 ├── apps/                     # Web frontends, one per origin (planned)
