@@ -38,7 +38,10 @@ If code and docs disagree, stop and flag it. Don't silently pick one.
 ## Legal/regulatory copy rules
 
 - §1657 output is always labelled a **guide**, never a will. Never add a "print and sign" CTA for 1657. (AC-09)
-- §1656 signing guide states that **at least two witnesses are present together**. (AC-10)
+- §1657 guide states that the whole text, the date and the signature must be handwritten, that a fingerprint or mark **can't** replace the signature, and that alterations must be handwritten and signed.
+- §1656 signing guide states that **at least two witnesses are present together**. (AC-10) The checklist also warns that witnesses (and the writer) **and their spouses can't inherit under that will** (CCC §1653), and lists who can't be a witness (§1670).
+- The will flow requires the testator to be ≥ 15 (CCC §25).
+- Contextual cards and quote flows must not contain links that facilitate contract formation, give personalized suitability advice, or imply performance-based pay, pending counsel review of the OIC B.E. 2569 guidelines (REVIEW-NOTES R-16).
 - Living Will (NHA §12) ≠ generic DNR. Self-reported medical info is visually distinct from legal documents.
 - Benefit amounts and legal references live in `config/` with `source_url`, `effective_date` and `version`. Never hard-code amounts in UI copy (e.g., never write "everyone gets 50,000 THB"). (AC-11)
 - Never call the lead flow "anonymous". Its name is **Privacy-Limited Quote**.

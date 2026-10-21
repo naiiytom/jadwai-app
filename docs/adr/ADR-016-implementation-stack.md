@@ -18,7 +18,7 @@ fix languages or frameworks. Constraints:
 
 | Layer | Choice | Rationale |
 |---|---|---|
-| Crypto core | **Rust** crate `vault-core` with RustCrypto (`chacha20poly1305` / `aes-gcm`, `hkdf`, `sha2`, `x25519-dalek` or HPKE), a reviewed threshold/Shamir crate (to be chosen) and `zeroize` | One implementation for WASM and native. Memory safety. Audited primitives |
+| Crypto core | **Rust** crate `vault-core` with RustCrypto (`chacha20poly1305` / `aes-gcm`, `hkdf`, `sha2`, `x25519-dalek` or HPKE), a reviewed threshold/Shamir crate (to be chosen) and `zeroize` | One implementation for WASM and native. Memory safety. Note that the `aes-gcm`/`chacha20poly1305` crates have had **one limited audit** (NCC Group for MobileCoin, Feb 2020, about 5 person-days, no significant findings). Check that the audit scope covers the version and XChaCha variant we pin, and budget our own review |
 | Browser bindings | `vault-wasm` via `wasm-bindgen` | Keeps crypto out of JS. JS handles UI only |
 | Risk engine | Rust crate `risk-engine` → WASM | Versioned formulas, deterministic and testable |
 | Recovery tool | Rust `recovery-cli` (no network) | Independent recovery after service sunset |

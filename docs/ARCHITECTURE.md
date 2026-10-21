@@ -169,7 +169,7 @@ AAD v1 = canonical_encode(vault_id, logical_object_id, tier, object_type,
                           schema_version, key_version, object_revision)
 ```
 
-- **Proposal:** XChaCha20-Poly1305, because random 192-bit nonces remove the GCM nonce-collision budget concern for multi-device clients. It must run on RustCrypto in WASM. Decide in ADR-001.
+- **Proposal:** XChaCha20-Poly1305. Its random 192-bit nonces remove the AES-GCM limit: with random 96-bit IVs, NIST SP 800-38D caps a key at 2³² encryptions, which multi-device clients and long-lived keys make hard to track. It must run on RustCrypto in WASM. WebCrypto has no XChaCha. Decide in ADR-001.
 - Attachments: a per-file CEK wrapped by the Tier key, chunked AEAD (STREAM construction) for streaming decrypt (NFR-PERF-01).
 - Including `object_revision` in the AAD is a **proposal** for rollback detection (ADR-013).
 
@@ -277,7 +277,7 @@ Logical schema: [architecture/DATA-MODEL.md](architecture/DATA-MODEL.md).
 
 - Pinned dependencies, committed lockfiles, reviewed lockfile diffs, SBOM (CycloneDX) per release, vulnerability scanning.
 - Reproducible or verifiable `web-vault` builds. Signed release manifest (e.g., Sigstore) listing asset hashes.
-- CSP + Trusted Types enforced. CI fails on new `connect-src` or `script-src` entries without review (AC-07).
+- CSP + Trusted Types enforced. Trusted Types are Baseline as of Feb 2026 (Chrome 83+, Safari 26, Firefox 148). CI fails on new `connect-src` or `script-src` entries without review (AC-07).
 - Option, ADR-006: a signed native/PWA companion for higher assurance, because web delivery can't fully remove the malicious-build risk.
 
 ## 13. Observability

@@ -19,5 +19,7 @@ reviewed_by: <counsel/owner>
 reviewed_at: 2026-10-01
 ```
 
+Benefit entries also need `scheme` (e.g., `SSF_S33`, `SSF_S39`, `SSF_S40_OPT1..3`, `WCF`) and an eligibility predicate, because work-related deaths fall under the Workmen's Compensation Fund, not the Social Security Fund (REVIEW-NOTES R-18).
+
 Never present an amount as a guaranteed entitlement (PRD §8.5). Don't commit anything here
 until counsel review (Phase 0.1).

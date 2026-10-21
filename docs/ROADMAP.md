@@ -17,7 +17,7 @@ hierarchy, recovery topology, legal copy) before production code exists.
 
 | # | Deliverable | Output | Refs |
 |---|---|---|---|
-| 0.1 | Thai counsel review: will templates (§1656/§1657), Living Will copy, insurance lead model, legal directory model | Counsel memo, approved template v1 | §8, R-13, R-14 |
+| 0.1 | Thai counsel review: will templates (§1656/§1657 + §1653/§1670/§25 checklist), Living Will copy, insurance lead model (incl. OIC B.E. 2569 guidelines), legal directory model, e-will validity | Counsel memo, approved template v1 | §8, R-13, R-14, R-16, R-17, R-19 |
 | 0.2 | ADRs for key hierarchy, crypto library, recovery threshold, escrow release, web threat model | ADR-001, 002, 003, 005, 006 *Accepted* | §14 |
 | 0.3 | Abuse-case workshop | Updated THREAT-MODEL.md | §12 |
 | 0.4 | Data map, PDPA RoPA, retention model | RoPA, retention schedule, processor register | §8.1, ADR-010 |
@@ -83,7 +83,7 @@ end with real channels · service-exit runbook tested · AC-12 runbook demonstra
 | Corporate HR benefit catalog + beneficiary statuses | FR-3.2 | AC-06 |
 | Partner directory, billing, conversion feedback | §11 | — |
 
-**Gate:** counsel or OIC confirmation of the lead/fee model (R-13) **before** launch.
+**Gate:** counsel or OIC confirmation of the lead/fee model (R-13) **before** launch, including how the OIC guidelines for unlicensed persons on digital media (B.E. 2569, in force 24 Jul 2026) apply to contextual cards, links and CPL (R-16).
 
 ## Continuous (all phases)
 

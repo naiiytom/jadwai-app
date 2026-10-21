@@ -13,3 +13,4 @@
 | [ROADMAP.md](ROADMAP.md) | Phases 0–3 with exit criteria |
 | [TRACEABILITY.md](TRACEABILITY.md) | FR / NFR / AC → component → phase → status |
 | [adr/](adr/README.md) | Architecture Decision Records |
+| [FACT-CHECK.md](FACT-CHECK.md) | Verification log for legal/regulatory/technical claims, with sources |
