@@ -1,0 +1,23 @@
+# Architecture Review Notes (PRD v1.1.1)
+
+Questions and gaps found while turning the PRD into an architecture. Each item needs an
+owner and an outcome, usually an ADR or a PRD revision. **Don't resolve legal items here.
+Route them to counsel.**
+
+| ID | Severity | Topic | Finding | Proposed direction | Route |
+|---|---|---|---|---|---|
+| R-01 | **High** | Tier 2 threshold topology | With plain 2-of-3 Shamir over {A: platform, B: primary, C: backup}, **B + C together can reconstruct `K_TIER2` without the platform**. That skips death verification, `RELEASE_DELAY_48H`, owner cancellation and `SECURITY_FREEZE`, so ACs 04 and 15 hold only for paths that go through A. | Pick one: **(a)** accept and document that B+C collusion is out of scope (they're owner-chosen, and the owner is warned); **(b)** make A mandatory: `K = combine(A, any-of(B, C))`. This keeps every server gate but means an *escrow-at-sunset* plan is needed so FR-5.3 still holds; **(c)** a hybrid where B+C works only after a long, owner-configurable delay enforced by an independent time-lock service. | ADR-003 |
+| R-02 | High | Tier 1 construction | The PRD says "card + designated verifier/auth" but doesn't say what decrypts `encrypted_recovery_package`. | Card secret + server activation secret per generation, with HKDF → AEAD (see ARCHITECTURE §7.1). | ADR-005 |
+| R-03 | High | Share custody for B/C | The PRD doesn't say how trusted persons hold their shares (account? device? printed?). | Seal each share to a keypair generated on the verifier's device at acceptance time, backed by passkey-PRF or a printed verifier kit. Re-seal to the request's ephemeral key when approving. | ADR-003 |
+| R-04 | Medium | State machine | §7 merges the vault heartbeat lifecycle and the unlock request lifecycle into one chain. | Split them into separate machines (STATE-MACHINES.md). | PRD v1.1.2 |
+| R-05 | Medium | Terminology | AC-12 still says "MVK" even though v1.1.1 removed the master key. `anonymous_leads` contradicts the rename to "Privacy-Limited Quote". | Change AC-12 to "Tier keys" and rename the table. | PRD v1.1.2 |
+| R-06 | Medium | Rollback by omission | Revision CAS stops stale writes, but a malicious server can still serve an older *consistent* snapshot. | Owner-signed vault head or per-device last-seen revision checks. | ADR-013 |
+| R-07 | Medium | Metadata leakage | Plaintext `tier`, `object_type`, sizes and counts reveal what the vault holds (for example, that a Living Will exists). Enforcing the free-tier 5-item limit also needs counts. | Coarse server-visible types and padded attachment sizes. Count-based entitlement checks are acceptable. | ADR-001 |
+| R-08 | Medium | Platform escrow protection | The PRD says Share A is "encrypted at rest" but doesn't name a KMS/HSM or say who can trigger release. | HSM/KMS-wrapped. Released only by the orchestrator's state machine identity, with dual control for any manual operation. | ADR-003 |
+| R-09 | Medium | Owner loses everything | If the owner loses every device and the recovery kit, the vault is unrecoverable by design (AC-13). That needs clear UX and onboarding copy. | Recovery kit check during onboarding, periodic "recovery drill" reminders (feeds Readiness Score). | ADR-002 |
+| R-10 | Medium | Notifications and lawful basis | LINE/SMS/IVR escalation sends owner and verifier contact data to telecom processors. | List them in the RoPA and processor register. Message templates carry no vault content. | ADR-010 |
+| R-11 | Low | Release delay | 48 h is fixed in the PRD. Owners may want it longer. | Make it configurable with a 48 h minimum, versioned in the policy. | ADR-003 |
+| R-12 | Low | Coverage-gap assumptions | "Estimated Family Living Cost" needs a versioned assumption source (years × monthly cost, inflation?). | Versioned assumption set in `config/` shipped to the client. | Product |
+| R-13 | Legal | Lead model | Whether a fixed CPL counts as insurance solicitation or brokerage is unresolved. | Phase 3 gate. Counsel or OIC must confirm. | Counsel |
+| R-14 | Legal | Will templates & Living Will copy | Counsel must sign off on the §1656/§1657 templates and the NHA §12 copy. | Phase 0 gate. | Counsel |
+| R-15 | Low | Ad catalog signing | Who signs the catalog, and how keys rotate, isn't specified. | Offline signing key, with the public key pinned in the vault build. | ADR-016 |
