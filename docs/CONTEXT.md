@@ -39,7 +39,7 @@ they don't open every day, so a consumer-only monthly model meets resistance (PR
 | Product | Price (hypothesis) | Notes |
 |---|---|---|
 | Free | 0 | 5 items, basic will guide, 1 emergency contact, email notifications |
-| Lifetime Vault Pass | 399 THB one-time | Unlimited items, attachments, first recovery card, document packs, heartbeat escalation over free channels. **No** SMS/IVR and no recurring consumer fee |
+| Lifetime Vault Pass | 399 THB one-time (hypothesis, VAT-inclusive assumption; ADR-007 Proposed, not yet for sale) | Unlimited items, attachments (fair-use TBD), first recovery card (Phase 2), document packs, heartbeat escalation (Phase 2) over LINE/Email/push. **No** SMS/IVR and no recurring consumer fee, but provider costs and quotas apply. "Lifetime" = vault access + export, not hosted service forever |
 | Agent SaaS | 490–990 THB/month | Invites, branding, relationship dashboard |
 | Leads / directory | Fixed CPL or fee | **No % of premium or legal fee** until licensing/ethics are confirmed |
 | Corporate HR | Per employee / annual | Employer data strictly separated from the personal vault |

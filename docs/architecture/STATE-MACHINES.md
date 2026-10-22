@@ -13,7 +13,8 @@ Derived from PRD §7, FR-4.1, FR-4.6, FR-4.7, FR-5.1, FR-5.2 and FR-3.2.
 stateDiagram-v2
   [*] --> ACTIVE
   ACTIVE --> HEARTBEAT_MISSED: heartbeat window elapsed
-  HEARTBEAT_MISSED --> OWNER_ESCALATION: LINE/Email
+  HEARTBEAT_MISSED --> OWNER_ESCALATION: LINE/Email/push
+  OWNER_ESCALATION --> OWNER_ESCALATION: reminder (interval TBD, ADR-007 OD-5)
   OWNER_ESCALATION --> VERIFIER_CONTACTED: ~D+14
   VERIFIER_CONTACTED --> DEATH_VERIFICATION_PENDING: verifier reports death → creates unlock_request
   HEARTBEAT_MISSED --> ACTIVE: owner checks in
@@ -23,8 +24,10 @@ stateDiagram-v2
 
 **Invariant (INV-07):** no state in this machine releases recovery material. The furthest it
 can go is *prompting* a verifier to open an unlock request, which then has to pass the full
-Tier 2 policy. Escalation runs over free channels only (Email, LINE, push). There are no SMS or
-IVR states, so no per-message cost (FR-1.1, ADR-007).
+Tier 2 policy. Escalation runs over LINE, Email and push; SMS and IVR are excluded. Provider
+costs and quotas apply, so delivery is best-effort (FR-1.1, ADR-007). Delivery failure or silence
+is neither death evidence nor approval, and it never shortens `RELEASE_DELAY_48H` (INV-07, INV-08).
+Failed-alert handling is open (ADR-007 OD-4).
 
 ## 2. Unlock request (per request) — FR-4.1 Path B, FR-4.3, FR-4.6
 

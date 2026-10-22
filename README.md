@@ -15,7 +15,7 @@ in advance. The server never needs to read the vault.
 
 | Area | Summary | PRD |
 |---|---|---|
-| Freemium vault | Map assets, liabilities, insurance and entitlements. Free tier covers 5 items. A one-time Lifetime Vault Pass unlocks the rest. Heartbeat escalation uses free channels only. | FR-1.1, FR-1.2 |
+| Freemium vault | Map assets, liabilities, insurance and entitlements. Free tier covers 5 items. A one-time Lifetime Vault Pass (price hypothesis, ADR-007 Proposed) unlocks the rest. Heartbeat escalation (Phase 2) uses LINE/Email/push; SMS/IVR are excluded. | FR-1.1, FR-1.2 |
 | Thai will preparation | §1657 *Handwritten Will Guide* (guidance only) and §1656 *Ordinary Will Document Pack* with a 2-witness signing guide | FR-1.3 |
 | Emergency Capsule (Tier 1) | Emergency contacts, self-reported health summary, Living Will (NHA §12) reference, funeral wishes | FR-1.4, FR-4.2 |
 | Estate Vault (Tier 2) | Assets, liabilities, insurance, will, claim documents. Released by 2-of-3 threshold + death verification + 48 h release delay | FR-4.2, FR-4.3 |
