@@ -36,7 +36,7 @@ flowchart LR
   end
 
   subgraph External
-    LINE[LINE / SMS / IVR / Email providers]
+    LINE[LINE / Email / push providers]
     IDP[Identity proofing e.g. ThaiD route — ADR-011]
     OIC[OIC Connect · My Legacy — handoff only]
     PAY[Payment provider]
@@ -87,7 +87,7 @@ flowchart TB
     ID[Identity Service<br/>passkeys, MFA, devices, IAL records]
     VA[Encrypted Vault API<br/>ciphertext objects, revisions, attachments]
     RO[Recovery Orchestrator<br/>unlock state machine, approvals, escrow release]
-    NS[Notification Service<br/>LINE/SMS/IVR/Email, heartbeat escalation]
+    NS[Notification Service<br/>LINE/Email/push, heartbeat escalation]
     LI[Lead Isolation Service<br/>consent receipts, leads]
     PR[Partner / License Registry<br/>agents, HR orgs, license checks]
     SE[Security Event Store<br/>append-only, hash-chained]

@@ -39,8 +39,7 @@ they don't open every day, so a consumer-only monthly model meets resistance (PR
 | Product | Price (hypothesis) | Notes |
 |---|---|---|
 | Free | 0 | 5 items, basic will guide, 1 emergency contact, email notifications |
-| Lifetime Vault Pass | 990 THB one-time | Unlimited items, attachments, first recovery card, document packs. **Doesn't** include recurring telecom |
-| Continuity Service | 299 THB/year | Heartbeat orchestration, LINE/SMS/IVR escalation. Cancelling never removes vault access |
+| Lifetime Vault Pass | 399 THB one-time | Unlimited items, attachments, first recovery card, document packs, heartbeat escalation over free channels. **No** SMS/IVR and no recurring consumer fee |
 | Agent SaaS | 490–990 THB/month | Invites, branding, relationship dashboard |
 | Leads / directory | Fixed CPL or fee | **No % of premium or legal fee** until licensing/ethics are confirmed |
 | Corporate HR | Per employee / annual | Employer data strictly separated from the personal vault |

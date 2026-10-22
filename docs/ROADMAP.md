@@ -61,7 +61,7 @@ P95 local decrypt/render < 2 s.
 | Physical card lifecycle/revocation | FR-5.1 | AC-05 |
 | Request-scoped 2-of-3 recovery | FR-4.3 | AC-03, AC-18 |
 | 48 h release delay + multi-channel owner cancellation | FR-4.3 | AC-04 |
-| Heartbeat escalation (Continuity Service) | FR-4.1 | AC-04 |
+| Heartbeat escalation (free channels: LINE/Email/push) | FR-4.1 | AC-04 |
 | DISPUTED / SECURITY_FREEZE + runbook | FR-4.6 | AC-15 |
 | Stage-based bereavement checklist | FR-4.4 | — |
 | OIC My Legacy guided handoff | FR-4.5 | — |

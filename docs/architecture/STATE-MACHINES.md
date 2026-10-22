@@ -14,21 +14,17 @@ stateDiagram-v2
   [*] --> ACTIVE
   ACTIVE --> HEARTBEAT_MISSED: heartbeat window elapsed
   HEARTBEAT_MISSED --> OWNER_ESCALATION: LINE/Email
-  OWNER_ESCALATION --> SMS_ESCALATION: ~D+3
-  SMS_ESCALATION --> IVR_ESCALATION: ~D+7
-  IVR_ESCALATION --> VERIFIER_CONTACTED: ~D+14
+  OWNER_ESCALATION --> VERIFIER_CONTACTED: ~D+14
   VERIFIER_CONTACTED --> DEATH_VERIFICATION_PENDING: verifier reports death → creates unlock_request
   HEARTBEAT_MISSED --> ACTIVE: owner checks in
   OWNER_ESCALATION --> ACTIVE: owner checks in
-  SMS_ESCALATION --> ACTIVE: owner checks in
-  IVR_ESCALATION --> ACTIVE: owner checks in
   VERIFIER_CONTACTED --> ACTIVE: owner checks in
 ```
 
 **Invariant (INV-07):** no state in this machine releases recovery material. The furthest it
 can go is *prompting* a verifier to open an unlock request, which then has to pass the full
-Tier 2 policy. SMS/IVR states require an active Continuity Service entitlement. Without it,
-escalation runs over Email/LINE only (FR-1.1).
+Tier 2 policy. Escalation runs over free channels only (Email, LINE, push). There are no SMS or
+IVR states, so no per-message cost (FR-1.1, ADR-007).
 
 ## 2. Unlock request (per request) — FR-4.1 Path B, FR-4.3, FR-4.6
 
