@@ -22,3 +22,4 @@ when the repo was set up. New ADRs copy [`0000-template.md`](0000-template.md) a
 | [015](ADR-015-document-provenance.md) | Document provenance sources | Proposed | 1 |
 | [016](ADR-016-implementation-stack.md) | Implementation stack | Proposed | 0 |
 | [017](ADR-017-monorepo-layout.md) | Monorepo layout | Proposed | 0 |
+| [018](ADR-018-owner-setup-state.md) | First-time owner setup state | Proposed | 0 |

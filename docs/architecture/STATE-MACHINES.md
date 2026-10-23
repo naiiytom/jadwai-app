@@ -98,3 +98,35 @@ The product never reports `CONFIRMED_BY_PROVIDER` unless the user records it or 
 
 `SELF_DECLARED | USER_UPLOADED | PROVIDER_VERIFIED | OFFICIAL_SOURCE`, and any of them can become
 `SUPERSEDED` or `EXPIRED`. A status must not be read as stronger evidence than actually exists.
+
+## 8. First-time owner setup (Phase 1 proposal) — FR-1.6
+
+This is a resumable onboarding progress model, not an authentication or key-authorization
+mechanism. Its transitions describe completed setup milestones only; implementation is
+blocked until Phase 0 design-freeze gates are complete and ADR-018 and its dependencies are
+accepted.
+
+```mermaid
+stateDiagram-v2
+  [*] --> NOT_STARTED
+  NOT_STARTED --> ACCOUNT_READY: account and passkey/MFA setup complete
+  ACCOUNT_READY --> VAULT_CREATED: client-side vault setup complete
+  VAULT_CREATED --> TIERS_CONFIGURED: Tier 1 and Tier 2 configured separately
+  TIERS_CONFIGURED --> RECOVERY_READY: owner recovery setup verified
+  RECOVERY_READY --> DEVICE_READY: initial trusted-device setup complete
+  DEVICE_READY --> VAULT_READY: vault can be opened by its owner
+```
+
+These milestones follow PRD §4.1's account, client-side vault, separate-tier, and owner
+recovery setup steps, with trusted-device setup required by FR-1.6. `VAULT_READY` means the
+vault can be opened by its owner; optional assets, liabilities, insurance records, coverage
+calculation, quotes, heartbeat settings, verifiers and documents are not setup gates. An
+interrupted setup remains at its last completed milestone and resumes there. Failed or
+incomplete work does not advance the milestone. The status is for onboarding progress only
+and MUST NOT grant access, prove identity, authorize recovery, or imply that recovery
+material can decrypt a tier.
+
+The exact completion checks, recovery-material construction, device authentication and
+enrollment notices, key provisioning, persistence, and concurrent-device behavior remain
+subject to ADR-001, ADR-002, ADR-005, ADR-013 and ADR-016. This proposal selects none of
+those mechanisms.
