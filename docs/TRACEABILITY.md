@@ -9,7 +9,7 @@ Status: `planned` → `designed` (ADR accepted) → `implemented` → `verified`
 
 | FR | Title | Component(s) | Phase | Verified by | Status |
 |---|---|---|---|---|---|
-| FR-1.1 | Tier & commercial entitlement | identity, web-app | 1 | — | planned |
+| FR-1.1 | Tier & commercial entitlement | identity, web-app | 1 | — (ADR-007 Proposed: entitlement matrix and tests TBD) | planned |
 | FR-1.2 | Asset & liability mapping | web-vault, vault-core | 1 | — | planned |
 | FR-1.3 | Thai will preparation (1656/1657) | web-vault, config/legal-templates | 1 | AC-09, AC-10 | planned |
 | FR-1.4 | Emergency Capsule & Living Will separation | web-vault, vault-core | 1 | — | planned |
@@ -21,7 +21,7 @@ Status: `planned` → `designed` (ADR accepted) → `implemented` → `verified`
 | FR-2.3 | Privacy-Limited Quote | web-lead, lead-isolation | 3 | AC-08 | planned |
 | FR-3.1 | Agent relationship portal | web-partners, partner-registry | 3 | AC-06 | planned |
 | FR-3.2 | Corporate HR hub | web-partners, partner-registry | 3 | AC-06 | planned |
-| FR-4.1 | Dual-path trigger | recovery-orchestrator, notification | 2 | AC-04 | planned |
+| FR-4.1 | Dual-path trigger | recovery-orchestrator, notification | 2 | AC-04 (ADR-007 Proposed: delivery-failure model tests TBD) | planned |
 | FR-4.2 | Two-tier access control | vault-core | 1 | AC-01 | planned |
 | FR-4.3 | Unlock approval & release delay | recovery-orchestrator | 2 | AC-03, AC-04 | planned |
 | FR-4.4 | Bereavement dashboard | web-vault, config/benefits | 2 | AC-11 | planned |
@@ -30,7 +30,7 @@ Status: `planned` → `designed` (ADR accepted) → `implemented` → `verified`
 | FR-4.7 | Temporary delegated access | vault-core, recovery-orchestrator | 2 (pilot) | AC-19 | planned |
 | FR-5.1 | Card / recovery package lifecycle | recovery-orchestrator, vault-core | 2 | AC-05 | planned |
 | FR-5.2 | Verifier lifecycle | recovery-orchestrator | 1/2 | AC-03 | planned |
-| FR-5.3 | Portability & service sunset | vault-core, recovery-cli | 0/2 | AC-17 | planned |
+| FR-5.3 | Portability & service sunset | vault-core, recovery-cli | 0/2 | AC-17 (ADR-007 Proposed: lifetime scope and sunset reserve gate) | planned |
 | FR-5.4 | Closure & crypto-erasure | vault-api, recovery-orchestrator | 2 | AC-20 | planned |
 | FR-5.5 | Multi-device sync & rollback | vault-api, vault-core | 1 | AC-16 | planned |
 | FR-5.6 | Document provenance | vault-api, web-vault | 1 | — | planned |
@@ -54,7 +54,7 @@ Status: `planned` → `designed` (ADR accepted) → `implemented` → `verified`
 | NFR-I18N-01 Localization | all apps, config | copy review | planned |
 | NFR-COMP-01 Retention | all services | retention jobs + audit | planned |
 | NFR-ID-01 Verifier IAL | recovery-orchestrator | AC-18 | planned |
-| NFR-DUR-01 Service exit | ops runbook | annual exercise | planned |
+| NFR-DUR-01 Service exit | ops runbook | annual exercise; funded-reserve/sunset decision (ADR-007 OD-2) | planned |
 | NFR-DATA-01 Legacy freshness | web-vault | unit tests | planned |
 
 ## Acceptance criteria → invariant

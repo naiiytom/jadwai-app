@@ -11,7 +11,7 @@ when the repo was set up. New ADRs copy [`0000-template.md`](0000-template.md) a
 | [004](ADR-004-death-verification.md) | Death certificate verification | Proposed | 2 |
 | [005](ADR-005-tier1-authentication.md) | Tier 1 card & authentication policy | Proposed | 0 |
 | [006](ADR-006-web-vs-native.md) | Web vs native companion | Proposed | 0 |
-| [007](ADR-007-continuity-pricing.md) | Continuity pricing & telecom cost | Proposed | 1 |
+| [007](ADR-007-pricing-notification-cost.md) | Pricing & notification cost | Proposed | 1 |
 | [008](ADR-008-oic-integration.md) | OIC integration | Proposed | 2 |
 | [009](ADR-009-partner-licensing.md) | Partner licensing verification | Proposed | 3 |
 | [010](ADR-010-pdpa-lawful-basis.md) | PDPA lawful bases & consent UX | Proposed | 0 |
