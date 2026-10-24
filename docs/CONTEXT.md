@@ -73,11 +73,13 @@ they don't open every day, so a consumer-only monthly model meets resistance (PR
 | **Envelope** | Ciphertext + `crypto_version`, `cipher_suite`, `nonce`, `key_version`, AAD metadata |
 | **AAD** | Additional authenticated data that binds a ciphertext to its identity and context |
 | **Key wrapper** | A Tier key encrypted under another key (owner, recovery or escrow) |
-| **Share A / B / C** | Tier 2 threshold components: Platform Escrow / Primary Trusted Person / Independent Backup |
+| **Share A / B / C** | Tier 2 threshold components: Platform Escrow / Primary Trusted Person / Independent Backup. Share A is never usable from an owner-controlled sunset bundle |
 | **Recovery package** | Encrypted, opaque blob on the NFC/QR card, plus `card_id` and `generation`. Never a raw share |
 | **Generation** | Monotonic version of a card or share set. Reissuing invalidates the earlier generations |
 | **Unlock request** | A server-side state machine instance for one recovery attempt. Approvals are scoped to it |
-| **RELEASE_DELAY_48H** | A policy delay enforced by the orchestrator. It's **not** a cryptographic time-lock |
+| **RELEASE_DELAY_48H** | The minimum 48-hour policy delay. It is distinct from the independent, portable authorization proof required for Tier 2 recovery after service sunset |
+| **Independent recovery authorization proof** | Offline-verifiable evidence that death approval, the owner cancellation period, dispute/freeze rules and the configured delay were all satisfied. Its protocol is an open Phase 0 security gate |
+| **Verifier recovery QR** | Offline backup of verifier-held share recovery material. It is a bearer secret: anyone who obtains it may use it within the recovery policy |
 | **SECURITY_FREEZE / DISPUTED** | A non-terminal hold that blocks release until explicit resolution |
 | **Heartbeat** | Periodic owner check-in. Missing one starts escalation, **never** an unlock |
 | **IAL-0…3** | Verifier identity assurance level, kept separate from the authentication method |
@@ -87,7 +89,7 @@ they don't open every day, so a consumer-only monthly model meets resistance (PR
 | **Consent receipt** | Versioned proof of consent: text version, purposes, granted, expiry, revoked |
 | **Beneficiary Planning & Status Hub** | Tracks `PREFERENCE_ONLY → … → CONFIRMED_BY_PROVIDER`. It never claims to make the change |
 | **Provenance status** | `SELF_DECLARED, USER_UPLOADED, PROVIDER_VERIFIED, OFFICIAL_SOURCE, SUPERSEDED, EXPIRED` |
-| **Portable recovery bundle** | Self-describing encrypted export that can be recovered without the production API |
+| **Portable recovery bundle** | Versioned encrypted ZIP export with a hashed manifest and owner signature, validated and recovered by the open-source offline CLI without the production API |
 | **MRTA** | Mortgage Reducing Term Assurance |
 | **PVD** | Provident Fund (กองทุนสำรองเลี้ยงชีพ) |
 | **ThaiD** | Thai government digital identity app (DOPA) |

@@ -57,21 +57,21 @@ The full normative list is in [docs/security/INVARIANTS.md](docs/security/INVARI
 └── config/                   # Versioned benefit tables & legal templates (source + effective date)
 ```
 
-## Proposed stack (pending ADR-016)
+## Agreed stack (ADR-016)
 
 - **Crypto & client logic:** Rust `vault-core`, compiled to **WASM** for the browser and to native code for an independent recovery CLI (FR-5.3: export bundles must stay recoverable even if the platform shuts down).
-- **Web:** TypeScript + Vite static SPAs, one per origin (`www`, `app`, `vault`, `partners`, `lead`), strict CSP + Trusted Types.
+- **Web:** Svelte + TypeScript + Vite static SPAs, one per origin (`www`, `app`, `vault`, `partners`, `lead`), strict CSP + Trusted Types.
 - **Backend:** Rust (axum + sqlx) on **PostgreSQL**. The append-only security event store uses a hash chain. A transactional outbox feeds notifications.
 - **Analytics:** allow-listed, schema-validated events only, in a domain physically separate from vault ciphertext.
 
-See [ADR-016](docs/adr/ADR-016-implementation-stack.md). The status is **Proposed**.
+See [ADR-016](docs/adr/ADR-016-implementation-stack.md). The stack is agreed; the repo remains Phase 0 and has no production code.
 
 ## Getting started
 
 Nothing builds yet. To contribute during Phase 0:
 
 1. Read [CLAUDE.md](CLAUDE.md), [docs/CONTEXT.md](docs/CONTEXT.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-2. Pick an open ADR in [docs/adr/](docs/adr/README.md) or a Phase 0 item in [docs/ROADMAP.md](docs/ROADMAP.md).
+2. Pick an open ADR or security gate in [docs/adr/](docs/adr/README.md) or a Phase 0 item in [docs/ROADMAP.md](docs/ROADMAP.md).
 3. Follow [CONTRIBUTING.md](CONTRIBUTING.md). Security-sensitive changes need the PR checklist.
 
 ## Legal notice

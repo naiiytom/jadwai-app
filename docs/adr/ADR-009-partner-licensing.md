@@ -20,8 +20,8 @@
 
 ## Proposed direction
 
-Accept the PRD default. Define a re-verification cadence and an expiry warning threshold.
+Use official license verification where an authoritative route exists; otherwise use documented manual verification. The re-verification cadence, expiry threshold, monetized lead model, and contextual card wording remain subject to counsel/OIC confirmation. Until then, contextual cards are educational only, with no contract-forming links or personalized suitability advice, and no performance-based compensation tied to policies or premiums.
 
 ## Consequences / dependencies
 
-- _To be completed when the ADR is accepted._
+- This ADR remains Proposed until legal review resolves the licensing and monetization questions.

@@ -80,6 +80,7 @@ stateDiagram-v2
 | A lead can't exist without a consent receipt created in the same transaction. The receipt stores `consent_text_version`, purposes, `granted_at`, `expires_at` and `revoked_at` | FR-2.3, AC-08 |
 | Lead tables have **no `user_id`/`vault_id`**. The lead origin has its own session and never sees vault cookies | §6.1, INV-16 |
 | The payload is a **minimum**: `lead_category`, `age_bracket`, `coverage_gap_bracket`, `product_intent`, region. Raw amounts never leave the vault | FR-2.1, NFR-PRIV-01 |
+| The consent screen says the platform and assigned partner process contact details; lead contact data uses a separate lead-domain KMS key | ADR-010, R-20 |
 | Contact details are encrypted at rest with a lead-domain KMS key, and are decrypted only to release them to the **one** partner who accepted | FR-2.3 |
 | Partners see contact details only **after** they accept. Before that, they see only the minimum payload | FR-2.3 "minimum necessary after assignment" |
 | Routing only goes to partners whose licence is currently verified (`last_verified_at` within the cadence, ADR-009) | §8.2 |
@@ -97,7 +98,7 @@ stateDiagram-v2
 
 ## 4. Contextual cards & directory (FR-2.2)
 
-- Partners submit placements. The platform reviews them (copy, licence, R-16), then **signs** them into a static catalog with eligibility rules and an expiry. The signing key is offline, and its public key is pinned in the `web-vault` build (R-15).
+- Partners submit placements. The platform reviews them (copy, licence, R-16), then **signs** them into a static catalog with eligibility rules and an expiry. The signing key is offline, and its public key is pinned in the `web-vault` build; key ownership, rotation and revocation remain a Phase 0 security gate (R-26).
 - The client downloads the whole catalog and evaluates the rules **locally**. The server never learns which rule matched (FR-2.2).
 - A CTA click goes to the lead origin (§3) or to a first-party directory page, **never** to a partner tracking URL from inside the vault origin (AC-07).
 - Billing is a fixed placement fee, so no impression or match telemetry is needed.
@@ -114,16 +115,16 @@ stateDiagram-v2
   INVITED --> EXPIRED
 ```
 
-- The agent dashboard shows relationship status and the last touchpoint. **Readiness is computed on the client** (FR-1.5), so "readiness-complete" reaches the agent only if the owner chooses to share a coarse flag (*Proposal*, R-21).
+- The agent dashboard shows relationship status and the last touchpoint. **Readiness is computed on the client** (FR-1.5); the owner must opt in before a coarse, revocable readiness flag reaches the agent (R-21).
 - Sticky card: name, photo, licence number with its verified/last-checked date, phone/LINE, organization. Printing agent details on the physical card needs owner opt-in.
 - An agent can be a verifier **only** by explicit owner choice, with a conflict-of-interest notice and an independent backup (FR-1.5, FR-5.2).
 - Termination removes the sponsorship and the sticky card, and **never** affects vault data, recovery or entitlements the owner already holds (FR-3.1, FR-5.4).
-- Sponsorships live in the partner domain (`sponsorships`, DATA-MODEL D-10), not on `users`.
+- Sponsorships live in the partner domain (`sponsorships`, DATA-MODEL D-10), not on `users`; partner references are relationship-scoped pseudonyms resolved only by Identity Service (R-23).
 
 ## 6. Corporate HR hub (FR-3.2)
 
 - The employer is controller (or processor) **only** for HR program data: the benefit catalog (group insurance, PVD, Social Security guidance, internal bereavement benefits) and program enrolment.
-- Beneficiary planning statuses (`PREFERENCE_ONLY → … → CONFIRMED_BY_PROVIDER`) are held **in the employee's vault** by default. A status reaches the HR domain only when the employee explicitly shares it for a specific benefit (*Proposal*, R-22).
+- Beneficiary planning statuses are held **in the employee's vault** by default. A status reaches the HR domain only when the employee explicitly shares it for a specific benefit (R-22).
 - HR never sees the will, balances, funeral preferences or medical information (FR-3.2).
 - Leaving the employer ends HR program access. The personal vault and its entitlements stay (FR-5.4).
 

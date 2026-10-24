@@ -30,12 +30,12 @@ limits what can be disclosed).
 | Verifier account takeover | Passkey/MFA, request-specific challenge, approval expiry | Social engineering. Multi-party threshold | INV-06 |
 | Platform insider | No plaintext keys, escrow released only by the state machine, append-only events | Web build compromise remains | INV-01, INV-12 |
 | Platform + partner collusion | Partner isn't a default share holder | Owner may still pick a risky topology → warn | — |
-| **B + C collusion** | *Open* (R-01) | Depends on ADR-003 | INV-07, INV-09 |
+| **B + C collusion** | Independent portable authorization must enforce death approval, owner cancellation, `SECURITY_FREEZE` and the configured delay for every release path | Protocol and sunset mechanism unresolved (R-25); no timer-only release is acceptable | INV-07, INV-09 |
 | Old approval replayed | Bound to `unlock_request_id` + challenge + expiry. Shares sealed to the request key | Clock and state consistency | INV-06 |
 | Forged death certificate | Multi-party approval, release delay, owner cancellation, evidence review | Manual verification quality varies | INV-08 |
 | Ciphertext swapping | AAD binds identity, tier and schema | Client must validate AAD | INV-04 |
-| Nonce reuse | Random 192-bit nonce (proposal), tests and lint | Library misuse | INV-03 |
-| Stale or rollback write | Revision CAS, conflict UX, signed head (proposal) | Rollback by omission (R-06) | INV-14 |
+| Nonce reuse | Fresh random 192-bit nonce from CSPRNG, tests and lint | Library misuse | INV-03 |
+| Stale or rollback write | Revision CAS, per-device last-seen revision, conflict UX | A new device without a trusted checkpoint can miss rollback by omission (R-06) | INV-14 |
 | Malicious frontend release | Origin isolation, no third-party JS, signed and reproducible builds | Can't be fully removed on the web. ADR-006 | INV-10 |
 | Telemetry leak | Allow-listed schemas, no replay or DOM capture, log redaction | Developer error → CI tests | INV-11 |
 | Lead re-identification | No FK to the vault, minimum payload, separate DB role | Contact info is itself identifying | INV-16 |

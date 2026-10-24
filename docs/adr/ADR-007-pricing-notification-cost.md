@@ -1,14 +1,21 @@
 # ADR-007: Pricing & notification cost envelope
 
-- **Status:** Proposed (not binding; nothing here approves implementation or sales)
-- **Date:** 2026-10-22
+- **Status:** Accepted for notification-expiry boundary; pricing remains a hypothesis
+- **Date:** 2026-10-24
 - **Source:** PRD v1.1.1 §14 (ADR backlog), §11
-- **Deciders:** _TBD (Architecture, Security, Product)_
+- **Deciders:** Product owner
 
 ## Context
 
 FR-1.1 / §11: a one-time Lifetime Pass can't fund recurring per-message costs forever.
 PRD v1.1.1 handled that with a separate recurring Continuity Service (299 THB/year).
+
+## Accepted decision: notification entitlement boundary
+
+Expiry may disable paid notification channels only. It must not remove vault access or
+interrupt a recovery request already in progress. The Lifetime Pass price, notification cost
+envelope and service-exit funding remain hypotheses and open decisions below; this ADR does
+not approve a price or authorize sales.
 
 ## Historical PRD baseline (v1.1.1)
 

@@ -1,9 +1,9 @@
 # ADR-006: Web app vs native companion for higher-assurance vault
 
-- **Status:** Proposed
-- **Date:** 2026-10-21
+- **Status:** Accepted
+- **Date:** 2026-10-24
 - **Source:** PRD v1.1.1 §14 (ADR backlog)
-- **Deciders:** _TBD (Architecture, Security)_
+- **Deciders:** Product owner
 
 ## Context
 
@@ -19,10 +19,10 @@
 - PWA with a pinned service worker + release manifest check
 - Native companion (Tauri, which reuses `vault-core`) for recovery-critical actions
 
-## Proposed direction
+## Decision
 
-Web MVP. Keep `vault-core` platform-neutral so a Tauri or mobile companion can reuse it.
+Ship a static Svelte web MVP with isolated builds and hardened origins. Keep `vault-core` platform-neutral, but defer native and PWA companions until a demonstrated security or product need justifies them. The web-delivered build remains a residual risk; use signed, reproducible or verifiable releases and the vault-origin controls in the project invariants.
 
 ## Consequences / dependencies
 
-- _To be completed when the ADR is accepted._
+- Revisit a native/PWA companion only through a new security-reviewed decision.

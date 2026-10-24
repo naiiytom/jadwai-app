@@ -1,14 +1,14 @@
 # ADR-017: Monorepo layout
 
-- **Status:** Proposed
-- **Date:** 2026-10-21
+- **Status:** Accepted
+- **Date:** 2026-10-24
 
 ## Context
 
 Crypto, client engines, five web origins and several services have to evolve together
 while keeping strict boundaries (separate origin builds, separate data domains).
 
-## Decision (proposed)
+## Decision
 
 A single monorepo:
 

@@ -12,7 +12,7 @@ topology) and ADR-016 (stack) are accepted.
 | Identity | `users`, `trusted_devices` | `users.email` is CITEXT. Phone is stored as a hash only |
 | Vault | `vaults`, `encrypted_vault_objects`, `key_wrappers`, `document_provenance`, `portability_exports` | Ciphertext + wrapped keys only |
 | Recovery | `vault_verifiers`, `physical_cards`, `unlock_requests`, `unlock_approvals`, `unlock_disputes` | Escrow Share A is wrapped by KMS/HSM |
-| Lead | `consent_receipts`, `anonymous_leads` → **rename `privacy_limited_leads`** | **No** `user_id`/`vault_id` |
+| Lead | `consent_receipts`, `privacy_limited_leads` | **No** `user_id`/`vault_id`; relationship references are pseudonymous |
 | Security | `security_events` | Append-only/WORM |
 
 ## 2. Separation rules (PRD §6.1)
@@ -30,7 +30,7 @@ Each one needs confirmation in the ADR listed.
 | # | Table | Change | Why | ADR |
 |---|---|---|---|---|
 | D-01 | `encrypted_vault_objects` | Add `logical_object_id UUID NOT NULL`, `object_revision BIGINT NOT NULL`, `parent_revision BIGINT NULL`, `writer_device_id UUID NULL`. Make `UNIQUE(logical_object_id, object_revision)` | §5.3 says "key rotation without changing business identity" and FR-5.5 asks for rollback protection. The row `id` alone can't express either | ADR-013 |
-| D-02 | `encrypted_vault_objects` | Review whether a plaintext `object_type` leaks too much (e.g., `LIVING_WILL`, `FUNERAL_PREF`). Consider coarse server-visible types plus a fine type inside the ciphertext | Metadata minimization, PDPA §26 sensitivity | ADR-001 |
+| D-02 | `encrypted_vault_objects` | Use coarse server-visible types, keep fine types inside ciphertext, pad attachment sizes; item counts remain visible for entitlement checks | Accepted metadata tradeoff; PDPA §26 sensitivity | ADR-001 |
 | D-03 | `vault_verifiers` | Add `identity_assurance_level`, `ial_verified_at`, `ial_provider_ref`, `last_revalidated_at` | FR-1.7, AC-18, NFR-DATA-01 | ADR-011 |
 | D-04 | `unlock_requests` | Add `card_id`, `card_generation`, `requester_ref_hash`, `request_public_key`, `challenge_nonce`, `expires_at`, `correlation_group_id`, `policy_version` | Request-scoped binding, competing-request correlation, card revocation policy | ADR-003/005 |
 | D-05 | `unlock_approvals` | Add `sealed_share BYTEA NULL`. Represent the platform escrow component as a separate `escrow_releases` record, not as a verifier | The platform is Share A, not a `vault_verifiers` row | ADR-003 |

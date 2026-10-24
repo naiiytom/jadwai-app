@@ -1,9 +1,9 @@
 # ADR-004: Death certificate verification
 
-- **Status:** Proposed
-- **Date:** 2026-10-21
+- **Status:** Accepted
+- **Date:** 2026-10-24
 - **Source:** PRD v1.1.1 §14 (ADR backlog)
-- **Deciders:** _TBD (Architecture, Security, Legal)_
+- **Deciders:** Product owner
 
 ## Context
 
@@ -19,10 +19,10 @@ Tier 2 requires death verification. Forgery is a known threat (§5.7).
 - Provider/official verification if a route exists
 - Evidence stored as an encrypted object with retention
 
-## Proposed direction
+## Decision
 
-Manual review + release delay + owner cancellation as the baseline. OCR may assist, never approve.
+Use human review with dual control as the baseline, with official/provider checks where a valid route exists. Retain evidence only as encrypted objects under a counsel-approved retention policy. OCR may assist triage but must never approve. All approvals remain subject to the release delay, owner cancellation, disputes and `SECURITY_FREEZE`; no manual override may bypass those controls.
 
 ## Consequences / dependencies
 
-- _To be completed when the ADR is accepted._
+- Counsel/security must define reviewer authority, evidence retention, dispute/appeal and fallback procedures before Phase 2.
