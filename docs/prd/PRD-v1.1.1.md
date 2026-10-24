@@ -140,8 +140,7 @@ Target: Thailand - B2C Individuals, B2B2C Insurance Agents / Financial Advisors,
 | **Tier**                               | **Included**                                                                                                 | **Commercial Note**                                          |
 |----------------------------------------|--------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 | Free                                   | ทรัพย์สิน/หนี้สินสูงสุด 5 รายการ, basic will guide, emergency contact 1 คน, Email notification                       | ฟรีตลอดชีพสำหรับ core vault เพื่อ drive adoption                  |
-| Lifetime Vault Pass - 990 THB one-time | Unlimited items, encrypted attachments, recovery kit/card initial issue, advanced document packs             | ราคาเป็น hypothesis; ไม่รวม recurring telecom-heavy continuity |
-| Continuity Service - 299 THB/year      | Dead-Man heartbeat orchestration, LINE/SMS/IVR escalation, advanced verifier workflow, continuity operations | Optional recurring service แยกจากสิทธิ์เข้าถึง vault              |
+| Lifetime Vault Pass - 399 THB one-time (ราคารวม VAT 7% — assumption) | Unlimited items, encrypted attachments (fair-use limit TBD), recovery kit/card initial issue (Phase 2, FR-5.1), advanced document packs, heartbeat escalation (Phase 2, FR-4.1) ผ่าน LINE/Email/push | ราคาเป็น hypothesis และ ADR-007 ยังเป็น Proposed (ไม่ผูกพัน/ยังไม่ใช้ขาย); SMS/IVR ไม่รวม; ต้นทุน/โควต้าของ provider ยังมีอยู่; "lifetime" = vault access + export (FR-5.3) ไม่ใช่การรับประกัน hosted service ตลอดไป |
 | B2B Sponsored                          | สิทธิ์ตาม package ที่ agent/employer sponsor ให้                                                                   | Sponsor ไม่มีสิทธิ์ plaintext โดยอัตโนมัติ                           |
 
 ### FR-1.2 Asset & Liability Mapping
@@ -297,10 +296,8 @@ Path A - Heartbeat / Inactivity Escalation
 ```text
 ACTIVE
 -> HEARTBEAT_MISSED
--> OWNER_ESCALATION (LINE/Email)
--> SMS_ESCALATION (e.g., D+3)
--> IVR_ESCALATION (e.g., D+7)
--> VERIFIER_CONTACTED (e.g., D+14)
+-> OWNER_ESCALATION (LINE/Email/push, repeated reminders; interval TBD)
+-> VERIFIER_CONTACTED (e.g., D+14, LINE/Email)
 -> DEATH_VERIFICATION_PENDING
 
 IMPORTANT: inactivity alone MUST NOT unlock Tier 2.
@@ -314,7 +311,11 @@ Path B - Heir Emergency Scan
 
 - Heir/Verifier completes authentication challenge; platform creates unlock_request
 
-- Owner receives all-channel alert and can cancel during pending/release-delay state if alive
+- Owner receives an alert on all available channels (LINE/Email/push) and can cancel during pending/release-delay state if alive
+
+- Provisional (ADR-007 OD-4/OD-5, owners TBD): alert delivery is best-effort. Delivery failure or silence is neither evidence of death nor approval, and it never shortens or skips `RELEASE_DELAY_48H`. If no owner channel confirms delivery, release fails closed (the delay is held) rather than proceeding. Reminder timing and channel selection are defined before Phase 2 design freeze.
+
+- Heartbeat entitlement (provisional, ADR-007 OD-6): Free = Email notifications only, no heartbeat orchestration. Lifetime = heartbeat over LINE/Email/push. Sponsored = as Lifetime while the sponsorship is active; on expiry vault access, items and export remain, and heartbeat stops unless the owner holds Lifetime (consistent with the no-destroy-access rule in FR-3.1).
 
 ### FR-4.2 Two-Tier Access Control
 
@@ -426,11 +427,13 @@ Owner ต้อง export portable encrypted recovery bundle ได้โดย�
 
 - Service-exit plan ต้องระบุ notice period, export window, escrow/key material handling, deletion timeline และ customer communication runbook ก่อน production launch.
 
+- Lifetime Vault Pass scope (vault access + export), attachment fair-use limit, and a funded-reserve or sunset-policy decision MUST be recorded before the pass is sold (ADR-007 OD-2/OD-3, owner TBD). Phase 3 lead revenue MUST NOT be assumed to fund continuity.
+
 ### FR-5.4 Vault Closure & Cryptographic Erasure
 
 Account closure flow ต้องรองรับ export-before-close, card/verifier revocation, destruction/revocation of wrapped keys and escrow material, ciphertext deletion ตาม retention policy และ retention เฉพาะ audit records ที่จำเป็น.
 
-- ยกเลิก Agent sponsorship, เปลี่ยน employer หรือยกเลิก Continuity Service ต้องไม่ทำลายสิทธิ์เข้าถึง vault ที่ผู้ใช้เป็นเจ้าของอยู่แล้ว.
+- ยกเลิก Agent sponsorship หรือเปลี่ยน employer ต้องไม่ทำลายสิทธิ์เข้าถึง vault ที่ผู้ใช้เป็นเจ้าของอยู่แล้ว.
 
 ### FR-5.5 Multi-Device Sync & Rollback Protection
 
@@ -464,7 +467,7 @@ Encrypted documents ควรมี provenance metadata แยกจาก conte
 >
 > **7.** Optionally request Privacy-Limited Quote under separate consent.
 >
-> **8.** Set heartbeat frequency and continuity channels if Continuity Service is active.
+> **8.** If the account is entitled to heartbeat (Lifetime or active Sponsored), set frequency and notification channels (LINE/Email/push; Phase 2). Disclose that alerts can be delayed, missed or dropped (provider quotas apply) and that silence is not evidence of death or approval.
 
 ## 4.2 Heir - Emergency Scan
 
@@ -1005,8 +1008,7 @@ Temporary delegated access is a product authorization mechanism and MUST NOT be 
 
 | **Revenue Stream**      | **Model**                                               | **Guardrail**                                                                                                |
 |-------------------------|---------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| Lifetime Vault Pass     | 990 THB one-time (hypothesis)                           | covers vault features/initial physical card; does not promise unlimited telecom operations forever           |
-| Continuity Service      | 299 THB/year (hypothesis)                               | funds heartbeat, SMS/IVR, continuity operations; cancellation must not destroy access to already-owned vault |
+| Lifetime Vault Pass     | 399 THB one-time, VAT-inclusive assumption (hypothesis; ADR-007 Proposed) | vault features, initial physical card (Phase 2) and heartbeat over LINE/Email/push (Phase 2); SMS/IVR excluded; provider costs and quotas apply; no recurring consumer fee does not mean no recurring operating cost; lifetime scope, sunset policy and funded reserve are open (ADR-007 OD-2) |
 | Agent SaaS              | 490-990 THB/month                                       | relationship/branding/invite tools; no plaintext access                                                      |
 | Contextual Ads          | fixed placement/directory/marketing arrangement         | matching local; no third-party behavioral tracking in vault                                                  |
 | Insurance Leads         | Fixed CPL / marketing fee subject to legal confirmation | explicit user request + licensed partner + separate consent                                                  |
@@ -1114,7 +1116,7 @@ Temporary delegated access is a product authorization mechanism and MUST NOT be 
 | ADR-004 | Death certificate verification                                   | Manual/provider/official verification route; no automatic OCR-only approval                                                    |
 | ADR-005 | Tier 1 authentication policy                                     | Card + designated verifier/auth; must not disclose Tier 2 material                                                             |
 | ADR-006 | Web app vs native companion for higher-assurance vault           | Web MVP with hardened origin; evaluate signed native/PWA companion for stronger assurance                                      |
-| ADR-007 | Continuity pricing and telecom cost envelope                     | Separate recurring continuity entitlement from lifetime vault ownership                                                        |
+| ADR-007 | Pricing and notification cost envelope                           | Single Lifetime Vault Pass (399 THB); heartbeat on free channels only; no recurring consumer entitlement                       |
 | ADR-008 | OIC integration                                                  | Guided handoff until official API/agreement confirmed                                                                          |
 | ADR-009 | Partner licensing verification source/cadence                    | Use official verification where available; record last_verified_at                                                             |
 | ADR-010 | Sensitive data lawful bases and explicit consent UX              | Finalize with DPO/legal counsel and RoPA                                                                                       |

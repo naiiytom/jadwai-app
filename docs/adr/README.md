@@ -1,7 +1,8 @@
 # Architecture Decision Records
 
 ADR-001 to ADR-015 come from the PRD v1.1.1 §14 backlog. ADR-016 and ADR-017 were added
-when the repo was set up. New ADRs copy [`0000-template.md`](0000-template.md) and take the next number.
+when the repo was set up; ADR-018 records the proposed first-time owner setup state. New
+ADRs copy [`0000-template.md`](0000-template.md) and take the next number.
 Accepted decisions record the agreed design; they do not waive the implementation and review gates listed in each ADR and the roadmap.
 
 | ADR | Title | Status | Phase gate |
@@ -12,7 +13,7 @@ Accepted decisions record the agreed design; they do not waive the implementatio
 | [004](ADR-004-death-verification.md) | Death certificate verification | Accepted; operational/legal details gated | 2 |
 | [005](ADR-005-tier1-authentication.md) | Tier 1 card & authentication policy | Accepted; offline protocol gated | 0 |
 | [006](ADR-006-web-vs-native.md) | Web vs native companion | Accepted | 0 |
-| [007](ADR-007-continuity-pricing.md) | Continuity entitlement & telecom cost | Accepted; price remains a hypothesis | 1 |
+| [007](ADR-007-pricing-notification-cost.md) | Pricing & notification cost | Accepted expiry boundary; pricing remains a hypothesis | 1 |
 | [008](ADR-008-oic-integration.md) | OIC integration | Accepted | 2 |
 | [009](ADR-009-partner-licensing.md) | Partner licensing verification | Proposed | 3 |
 | [010](ADR-010-pdpa-lawful-basis.md) | PDPA lawful bases & consent UX | Proposed; privacy boundaries agreed | 0 |
@@ -23,3 +24,4 @@ Accepted decisions record the agreed design; they do not waive the implementatio
 | [015](ADR-015-document-provenance.md) | Document provenance sources | Accepted | 1 |
 | [016](ADR-016-implementation-stack.md) | Implementation stack | Accepted; catalog-key rotation gated | 0 |
 | [017](ADR-017-monorepo-layout.md) | Monorepo layout | Accepted | 0 |
+| [018](ADR-018-owner-setup-state.md) | First-time owner setup state | Proposed; Phase 0 gated | 1 |

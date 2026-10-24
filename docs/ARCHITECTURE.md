@@ -34,7 +34,7 @@ flowchart LR
   end
 
   subgraph External
-    LINE[LINE / SMS / IVR / Email providers]
+    LINE[LINE / Email / push providers]
     IDP[Identity proofing e.g. ThaiD route — ADR-011]
     OIC[OIC Connect · My Legacy — handoff only]
     PAY[Payment provider]
@@ -85,7 +85,7 @@ flowchart TB
     ID[Identity Service<br/>passkeys, MFA, devices, IAL records]
     VA[Encrypted Vault API<br/>ciphertext objects, revisions, attachments]
     RO[Recovery Orchestrator<br/>unlock state machine, approvals, escrow release]
-    NS[Notification Service<br/>LINE/SMS/IVR/Email, heartbeat escalation]
+    NS[Notification Service<br/>LINE/Email/push, heartbeat escalation]
     LI[Lead Isolation Service<br/>consent receipts, leads]
     PR[Partner / License Registry<br/>agents, HR orgs, license checks]
     SE[Security Event Store<br/>append-only, hash-chained]
@@ -155,7 +155,7 @@ flowchart TB
 ## 6. Encryption envelope (PRD §5.3, ADR-001)
 
 ```text
-Envelope v1 (conceptual, canonical binary encoding TBD in ADR-001)
+Envelope v1 (versioned fixed binary header; see ADR-001)
   crypto_version : u16
   cipher_suite   : XCHACHA20_POLY1305
   key_version    : u32
@@ -169,7 +169,7 @@ AAD v1 = canonical_encode(vault_id, logical_object_id, tier, object_type,
 
 - **Decision (ADR-001):** XChaCha20-Poly1305 with fresh random nonces from the platform CSPRNG, canonical AAD, and the vetted RustCrypto implementation shared through WASM. External cryptographic review and shared conformance vectors are Phase 0 exit gates.
 - Attachments: a per-file CEK wrapped by the Tier key, chunked AEAD (STREAM construction) for streaming decrypt (NFR-PERF-01).
-- Including `object_revision` in the AAD is a **proposal** for rollback detection (ADR-013).
+- `object_revision` is included in AAD for revision binding (ADR-013).
 
 ## 7. Recovery flows
 

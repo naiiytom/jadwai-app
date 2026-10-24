@@ -37,7 +37,7 @@ Each one needs confirmation in the ADR listed.
 | D-06 | `security_events` | Add `seq BIGINT`, `prev_hash BYTEA`, `event_hash BYTEA`, and revoke UPDATE/DELETE from all app roles | Tamper evidence for "append-only" | — |
 | D-07 | `anonymous_leads` | Rename to `privacy_limited_leads`. Add `consent_receipt_id NOT NULL` (FK inside the lead domain only), `retention_until` | FR-2.3 rename, AC-08 | ADR-010 |
 | D-08 | `consent_receipts` | Clarify `subject_ref` semantics. In the lead domain it must **not** equal `users.id` | Lead isolation | ADR-010 |
-| D-09 | `users` | Move `vault_status`, `inactivity_days` and `last_heartbeat_at` to a `vault_heartbeats` table in the recovery domain. Move `tier` to an `entitlements` table (Free / Lifetime / Continuity / Sponsored can stack) | Identity shouldn't own recovery state. Entitlements combine | ADR-007 |
+| D-09 | `users` | Move `vault_status`, `inactivity_days` and `last_heartbeat_at` to a `vault_heartbeats` table in the recovery domain. Move `tier` to an `entitlements` table (Free / Lifetime / Sponsored can stack) | Identity shouldn't own recovery state. Entitlements combine | ADR-007 |
 | D-10 | `users.sponsored_by_agent_id` | Move to a partner-domain `sponsorships` table with start and end dates | FR-3.1: terminating a sponsorship must not touch the vault | — |
 | D-11 | new | `delegations` (scope, expiry, status), `entitlements`, `escrow_releases`, `benefit_config_versions`, `legal_template_versions` | FR-4.7, FR-1.1, AC-11, FR-1.3 | various |
 | D-12 | `key_wrappers` | Add `wrapper_generation`, `device_id NULL`, and a `wrapper_type` value for `DELEGATE_TIER1_SUBSET` | Device revocation and re-wrap (AC-14), delegation | ADR-002 |
