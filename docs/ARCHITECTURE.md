@@ -1,8 +1,6 @@
 # Architecture
 
-> **Status:** Draft. Derived from PRD v1.1.1 §5–§7. Items marked **(ADR-xxx)** are
-> still open, and the text gives the PRD default position or a proposal. Don't
-> build against a proposal until its ADR is *Accepted*.
+> **Status:** Derived design. Accepted ADR decisions below are binding; open implementation and legal gates remain tracked in `architecture/REVIEW-NOTES.md` and `ROADMAP.md`. This repository remains in Phase 0; no production code is authorized.
 
 ## 1. Goals that shape the architecture
 
@@ -159,17 +157,17 @@ flowchart TB
 ```text
 Envelope v1 (conceptual, canonical binary encoding TBD in ADR-001)
   crypto_version : u16
-  cipher_suite   : enum { XCHACHA20_POLY1305 | AES_256_GCM }
+  cipher_suite   : XCHACHA20_POLY1305
   key_version    : u32
   aad_version    : u16
-  nonce          : 24 B (XChaCha) | 12 B (GCM): fresh CSPRNG per encryption
+  nonce          : 24 B: fresh CSPRNG per encryption
   ciphertext+tag : bytes
 
 AAD v1 = canonical_encode(vault_id, logical_object_id, tier, object_type,
                           schema_version, key_version, object_revision)
 ```
 
-- **Proposal:** XChaCha20-Poly1305. Its random 192-bit nonces remove the AES-GCM limit: with random 96-bit IVs, NIST SP 800-38D caps a key at 2³² encryptions, which multi-device clients and long-lived keys make hard to track. It must run on RustCrypto in WASM. WebCrypto has no XChaCha. Decide in ADR-001.
+- **Decision (ADR-001):** XChaCha20-Poly1305 with fresh random nonces from the platform CSPRNG, canonical AAD, and the vetted RustCrypto implementation shared through WASM. External cryptographic review and shared conformance vectors are Phase 0 exit gates.
 - Attachments: a per-file CEK wrapped by the Tier key, chunked AEAD (STREAM construction) for streaming decrypt (NFR-PERF-01).
 - Including `object_revision` in the AAD is a **proposal** for rollback detection (ADR-013).
 
@@ -192,7 +190,7 @@ sequenceDiagram
   Note over Heir: Nothing in this path can reach K_TIER2 (INV-02)
 ```
 
-Proposed construction: `package = AEAD(K_card, K_TIER1)` where `K_card = HKDF(card_secret ‖ activation_secret_gen)`.
+The accepted construction is `package = AEAD(K_card, K_TIER1)` where `K_card = HKDF(card_secret ‖ activation_secret_gen)`.
 The card alone, or the server alone, can't open it. Revoking deletes `activation_secret_gen`.
 A photographed old card plus a server compromise is the residual risk, which is why rotation is recommended on loss (FR-5.1).
 
@@ -223,7 +221,7 @@ sequenceDiagram
 
 - Shares are **sealed to the request's ephemeral key**, so approvals and shares can't be replayed into a different request (INV-06).
 - **The server never combines shares**, so the server never sees `K_TIER2`.
-- ⚠️ **Open topology issue:** with plain 2-of-3, **B + C together** can reconstruct without Share A. That bypasses death verification, release delay, owner cancellation and freeze. See [REVIEW-NOTES §R-01](architecture/REVIEW-NOTES.md). This must be decided in ADR-003.
+- Every Tier 2 path, including B+C after service sunset, must preserve death verification, owner cancellation, dispute/`SECURITY_FREEZE` handling, and the configured delay. A timer alone is insufficient. The independent portable authorization mechanism remains Phase 0 gate R-25; do not implement or ship B+C fallback before review. See [REVIEW-NOTES §R-25](architecture/REVIEW-NOTES.md).
 
 ### 7.3 Owner device and account recovery (FR-1.6, ADR-002)
 
@@ -251,7 +249,7 @@ with optimistic locking on `status`). Model-based tests come from the transition
 - Each write carries `logical_object_id`, `object_revision`, `parent_revision` and `writer_device_id`.
 - The server enforces **compare-and-swap** on `(logical_object_id, parent_revision)` and rejects stale writes with a conflict. It never merges plaintext.
 - Clients show a conflict UX for security-sensitive types (will, verifier set, recovery policy, beneficiary status).
-- Optional hardening: the owner signs a **vault head** (a hash over current revisions) so a malicious server can't serve an older but valid set (rollback by omission).
+- Devices retain their last-seen revision and flag older snapshots. A new device without a trusted checkpoint may not detect an older, internally consistent snapshot; owner-signed vault heads remain deferred.
 
 ## 10. Data domains
 
@@ -292,8 +290,8 @@ Logical schema: [architecture/DATA-MODEL.md](architecture/DATA-MODEL.md). The le
 The export bundle contains encrypted objects, an attachment manifest, a crypto/version manifest,
 recovery metadata, a card/verifier generation summary and human-readable instructions. The format is
 documented in-repo, and `crates/recovery-cli` (native, no network) validates and recovers it. The
-service-exit runbook covers the notice period, the export window, escrow handling (see R-01) and deletion.
+service-exit runbook covers the notice period, the export window, escrow handling (see R-25) and deletion.
 
-## 15. Proposed technology mapping
+## 15. Technology mapping
 
-See [ADR-016](adr/ADR-016-implementation-stack.md) (Proposed) and [ADR-017](adr/ADR-017-monorepo-layout.md).
+See accepted [ADR-016](adr/ADR-016-implementation-stack.md) and [ADR-017](adr/ADR-017-monorepo-layout.md). The agreed stack is Rust for cryptographic/backend components and Svelte + TypeScript + Vite for static web applications; this remains a design decision, not production implementation.

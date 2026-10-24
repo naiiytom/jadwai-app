@@ -18,22 +18,22 @@ hierarchy, recovery topology, legal copy) before production code exists.
 | # | Deliverable | Output | Refs |
 |---|---|---|---|
 | 0.1 | Thai counsel review: will templates (§1656/§1657 + §1653/§1670/§25 checklist), Living Will copy, insurance lead model (incl. OIC B.E. 2569 guidelines), legal directory model, e-will validity | Counsel memo, approved template v1 | §8, R-13, R-14, R-16, R-17, R-19 |
-| 0.2 | ADRs for key hierarchy, crypto library, recovery threshold, escrow release, web threat model | ADR-001, 002, 003, 005, 006 *Accepted* | §14 |
+| 0.2 | ADRs for key hierarchy, crypto library, recovery safeguards, escrow release, web threat model | ADR-001, 002, 003, 005, 006 accepted; ADR-003 implementation blocked by R-25 | §14 |
 | 0.3 | Abuse-case workshop | Updated THREAT-MODEL.md | §12 |
 | 0.4 | Data map, PDPA RoPA, retention model | RoPA, retention schedule, processor register | §8.1, ADR-010 |
 | 0.5 | Owner/device recovery threat model + **tested** owner-held recovery prototype | Spike in `crates/vault-core` | FR-1.6, ADR-002 |
-| 0.6 | Portable recovery format + minimum export contract | `docs/formats/export-bundle-v1.md` | FR-5.3, ADR-012 |
-| 0.7 | Verifier IAL policy baseline + provider abstraction | ADR-011 *Accepted* | FR-1.7 |
-| 0.8 | Stack + repo tooling | ADR-016/017 *Accepted*. CI skeleton (fmt, lint, test, SBOM) | — |
+| 0.6 | Portable recovery format + minimum export contract, including Tier 1 verifier factor and Tier 2 safeguard continuity | `docs/formats/export-bundle-v1.md`; R-25 resolved before production | FR-5.3, ADR-012 |
+| 0.7 | Verifier IAL policy baseline + provider abstraction | ADR-011 mapping and provider contract accepted by security/counsel | FR-1.7 |
+| 0.8 | Stack + repo tooling | ADR-016/017 accepted. CI skeleton (fmt, lint, test, SBOM) | — |
 
 **Engineering spikes (allowed in Phase 0, throwaway quality, must not ship):**
 
 - `vault-core` envelope encrypt/decrypt with AAD in Rust → WASM, with a nonce-uniqueness property test and a Tier 1 ⇏ Tier 2 negative test.
-- Threshold recovery prototype for the R-01 options (a) and (b).
+- Prototype only a Tier 2 authorization design that preserves death verification, owner cancellation, `SECURITY_FREEZE` and the configured delay on every path. Timer-only B+C release is rejected.
 - `web-vault` CSP/Trusted Types skeleton with a CI check that fails on new script sources.
 
-**Exit criteria:** ADR-001/002/003/005/006/011/012/013/016 Accepted · counsel sign-off on 0.1 ·
-RoPA drafted · REVIEW-NOTES High items resolved.
+**Exit criteria:** ADR-001/002/003/005/006/011/012/013/016 accepted · R-25 independent authorization and sunset mechanism reviewed · counsel sign-off on 0.1 ·
+RoPA drafted · catalog-signing key ownership/rotation assigned · REVIEW-NOTES High items resolved. No production recovery code starts before these gates pass.
 
 ## Phase 1: Core Vault MVP
 

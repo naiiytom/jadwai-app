@@ -21,9 +21,12 @@
 
 ## Proposed direction
 
-Pending DPO/counsel.
+The technical privacy boundaries are agreed: the lead domain is not zero-knowledge and must say so at consent; it uses its own KMS key and decrypts contact data only after assignment to the accepting partner. Readiness sharing is coarse, opt-in and revocable. Beneficiary status remains in the vault unless the employee explicitly shares a specific status with HR. Partner references use relationship-scoped pseudonyms resolved by Identity Service.
+
+Lawful bases, purpose catalog, consent wording, processor register and retention periods remain pending DPO/counsel. Do not ship lead or partner processing until those are approved.
 
 ## Consequences / dependencies
 
 - R-10
 - D-07, D-08
+- R-20, R-21, R-22, R-23

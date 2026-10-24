@@ -7,6 +7,8 @@ Derived from PRD §7, FR-4.1, FR-4.6, FR-4.7, FR-5.1, FR-5.2 and FR-3.2.
 > into separate machines (see REVIEW-NOTES R-04). A vault can have one heartbeat state
 > and *several* unlock requests at once, and competing requests must be correlated (FR-4.6).
 
+**Tier 2 recovery gate:** every release path, including B+C after service sunset, must preserve death verification, owner cancellation, dispute/`SECURITY_FREEZE` handling and the configured delay. A timer alone is insufficient. The portable protocol that proves these conditions is an open Phase 0 gate (R-25); do not implement or ship a B+C fallback before it is reviewed.
+
 ## 1. Heartbeat / inactivity (per vault) — FR-4.1 Path A
 
 ```mermaid
@@ -62,6 +64,8 @@ stateDiagram-v2
 | `SECURITY_FREEZE` blocks release and pauses the delay. It **never** exits on a timer | FR-4.6, AC-15 |
 | Exiting `SECURITY_FREEZE` needs an explicit resolution policy, evidence review and an audit event | FR-4.6 |
 | Owner cancellation invalidates the server release token and share delivery for that request | FR-4.3 |
+| A B+C sunset path may release only with an independently verifiable proof that death approval, cancellation, freeze/dispute policy and the configured delay were all satisfied; no usable Share A is included in the owner bundle | ADR-003, ADR-012, R-25 |
+| Continuity entitlement expiry can stop paid notification channels, but does not interrupt an unlock request already in progress | ADR-007 |
 | Approvals belong to one request and expire with it (`COMPLETED/CANCELLED/EXPIRED/REJECTED`) | FR-4.3, AC-03 |
 | A card revoked after the request was created → policy: **proposed** to force re-verification and freeze if the card was reported compromised | §7.1 (open) |
 | A second concurrent Tier 2 request for the same vault → correlate. Conflicting requesters → `DISPUTED` | FR-4.6 |
@@ -97,5 +101,6 @@ The product never reports `CONFIRMED_BY_PROVIDER` unless the user records it or 
 
 ## 7. Document provenance — FR-5.6
 
-`SELF_DECLARED | USER_UPLOADED | PROVIDER_VERIFIED | OFFICIAL_SOURCE`, and any of them can become
-`SUPERSEDED` or `EXPIRED`. A status must not be read as stronger evidence than actually exists.
+V1 supports `SELF_DECLARED | USER_UPLOADED`. Provider/official states require a defined evidence source,
+verification procedure and freshness/expiry rule before they are added. A status must not be read as
+stronger evidence than actually exists.

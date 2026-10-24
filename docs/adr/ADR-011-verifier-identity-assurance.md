@@ -18,7 +18,13 @@ FR-1.7 / §5.9: authentication is kept separate from identity proofing. Levels I
 - Provider abstraction interface
 - Minimized, retention-limited IdP artifacts
 
-## Proposed direction
+## Decision
+
+Use a provider-neutral assurance contract and minimize retention of identity-provider artifacts. No identity provider is a Tier 2 cryptographic root. Define the IAL-to-recovery-policy mapping with security and counsel before recovery implementation; do not infer a mapping in product code. The mapping and provider contract are Phase 0 exit gates.
+
+## Superseded proposal from the original ADR
+
+The original direction below is superseded by the provider-neutral policy above.
 
 Accept the PRD default. Define the IAL→policy mapping and the provider interface.
 

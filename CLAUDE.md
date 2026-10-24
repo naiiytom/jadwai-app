@@ -74,3 +74,17 @@ Not defined yet. When the first toolchain lands (ADR-016), record the build, tes
 - Pin dependencies, commit lockfiles and review lockfile diffs. Adding a dependency to `vault-core` or `apps/web-vault` needs justification in the PR.
 - Keep test fixtures synthetic. Never use real Thai ID numbers, policy numbers or personal data.
 - Open questions go to `docs/architecture/REVIEW-NOTES.md`. Don't invent answers to legal questions.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in this repository's GitHub Issues. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, and `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repo. Read `docs/CONTEXT.md` and relevant `docs/adr/` decisions. See `docs/agents/domain.md`.

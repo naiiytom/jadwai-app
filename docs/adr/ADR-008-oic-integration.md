@@ -1,9 +1,9 @@
 # ADR-008: OIC integration
 
-- **Status:** Proposed
-- **Date:** 2026-10-21
+- **Status:** Accepted
+- **Date:** 2026-10-24
 - **Source:** PRD v1.1.1 §14 (ADR backlog)
-- **Deciders:** _TBD (Architecture, Security, Legal)_
+- **Deciders:** Product owner
 
 ## Context
 
@@ -18,10 +18,10 @@ FR-4.5: OIC Connect *My Legacy* is the official discovery route for heirs.
 - Deep link + checklist
 - Future API integration under an agreement
 
-## Proposed direction
+## Decision
 
-Accept the PRD default. Store only the handoff status the user records.
+Use a guided handoff with a deep link and checklist. Store only handoff status entered by the user. Do not build a direct integration until an official API and agreement exist.
 
 ## Consequences / dependencies
 
-- _To be completed when the ADR is accepted._
+- Reassess only when an official integration route is available.
